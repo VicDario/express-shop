@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { PORT } = require('../config');
+const { PORT } = require('./config');
 const routerAPI = require('./routes/index');
 
 const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/errorHandler');
@@ -29,4 +29,4 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
