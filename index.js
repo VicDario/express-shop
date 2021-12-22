@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const { PORT } = require('../config');
 const routerAPI = require('./routes/index');
 
 const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/errorHandler');
 
 const app = express();
-const port = 5000;
 
 app.use(express.json());
 const whiteList = ['http://localhost:3000', 'http://localhost:5000'];
@@ -29,4 +29,4 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${port}!`));
