@@ -11,7 +11,7 @@ class UserService {
 	}
 
 	async find() {
-		const result = await pool.query('SELECT * FROM public.tasks');
+		const result = await this.pool.query('SELECT * FROM public.tasks');
 		return result.rows;
 	}
 
