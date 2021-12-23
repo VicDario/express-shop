@@ -14,6 +14,11 @@ const UserSchema = {
 		type: DataTypes.STRING
 
 	},
+	email: {
+		allowNull: false,
+		unique: true,
+		type: DataTypes.STRING
+	},
 	password: {
 		allowNull: false,
 		type: DataTypes.STRING
@@ -33,8 +38,7 @@ const UserSchema = {
 }
 
 class User extends Model {
-	static associate() {
-	}
+	static associate() {}
 
 	static config(sequelize) {
 		return {
