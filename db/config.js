@@ -1,4 +1,4 @@
-const { DB_USER, DB_PASS } = require('../config');
+const { DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME } = require('../config');
 
 const USER = encodeURIComponent(DB_USER);
 const PASSWORD = encodeURIComponent(DB_PASS);
