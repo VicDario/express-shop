@@ -1,13 +1,18 @@
 'use strict';
-
-const { CustomerSchema, CUSTOMER_TABLE }  = require('../models/customerModel');
+const { DataTypes } = require('sequelize');
+const { CUSTOMER_TABLE }  = require('../models/customerModel');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema);
+    await queryInterface.changeColumn(CUSTOMER_TABLE, 'user_id', {
+		allowNull: false,
+		type: DataTypes.INTEGER,
+		unique: true,
+		field: 'user_id'
+	});
   },
 
   down: async (queryInterface) => {
-    await queryInterface.drop(CUSTOMER_TABLE);
+    // await queryInterface.dropTable(CUSTOMER_TABLE);
   }
 };
