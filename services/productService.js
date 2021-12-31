@@ -1,4 +1,3 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
 
 // const pool = require('../libs/postgres.pool');
@@ -16,12 +15,14 @@ class ProductService {
 		return newProduct;
 	}
 	async find() {
-		const products = await models.Product.findAll();
+		const products = await models.Product.findAll({
+			include: ['category']
+		});
 		return products;
 	}
 	async findOne(id) {
-		const product = await models.Product.findOne({ where: { id }});
-		if(!product) throw boom.notFound('Product not found');
+		const product = await models.Product.findByPk(id);
+		if(!product)	throw boom.notFound('Product not found');
 		return product;
 	}
 	async update(id, data) {
