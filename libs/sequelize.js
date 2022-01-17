@@ -9,23 +9,19 @@ let URI = '';
 const options = {
 	dialect: 'postgres',
 	loggin: NODE_ENV === 'production' ? false : true,
-	SSL: {
-		rejectUnauthorized: false
-	}
 }
 
 if(NODE_ENV === 'production'){
 	URI = DATABASE_URL;
-	options.ssl = {
-		rejectUnauthorized: false
+	options.dialectOptions = {
+		ssl: {
+			rejectUnauthorized: false
+		}
 	}
-}else	URI = `postgresql://${USER}:${PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+} else	URI = `postgresql://${USER}:${PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
 
-const sequelize = new Sequelize(URI, {
-	dialect: 'postgres',
-	...options
-});
+const sequelize = new Sequelize(URI, options);
 
 setUpModels(sequelize);
 
