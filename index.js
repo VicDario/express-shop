@@ -30,4 +30,4 @@ app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+app.listen(PORT, () => console.log(`Store listening on port ${PORT}!`));
