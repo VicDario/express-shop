@@ -9,6 +9,8 @@ const categoryId = Joi.number().integer();
 
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
+const minPrice = Joi.number().min(0);
+const maxPrice = Joi.number().min(0);
 
 const createProductSchema = Joi.object({
 	name: name.required(),
@@ -29,7 +31,13 @@ const getProductSchema = Joi.object({
 });
 const queryProductSchema = Joi.object({
 	limit,
-	offset
+	offset,
+	price,
+	minPrice,
+	maxPrice: maxPrice.when('minPrice', {
+		is: Joi.exist(),
+		then: maxPrice.required(),
+	})
 });
 
 module.exports = {
