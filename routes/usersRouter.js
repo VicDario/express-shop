@@ -7,7 +7,7 @@ const { createUserSchema, updateUserSchema, getUserSchema } = require('../schema
 
 const userService = new UserService();
 
-router.get('/users', async (req, res) => {
+router.get('/', async (req, res) => {
 	const users = await userService.find();
 	res.json(users);
 });
