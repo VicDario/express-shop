@@ -24,6 +24,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.get('/ruta', checkApiKey, (req, res) => res.send('Hello World!'));
 
+require('./utils/auth');
+
 routerAPI(app);
 
 app.use(logErrors);
