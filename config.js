@@ -10,4 +10,5 @@ module.exports = {
 	DB_NAME: process.env.DB_NAME,
 	DATABASE_URL: process.env.DATABASE_URL,
 	API_KEY: process.env.API_KEY,
+	JWT_SECRET: process.env.JWT_SECRET,
 }
