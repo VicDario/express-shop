@@ -4,10 +4,16 @@ const router = express.Router();
 
 const validatorHandler = require('../middlewares/validatorHandler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/userSchema');
+const passport = require('passport');
+
+const { checkRoles } = require('../middlewares/authHandler');
 
 const userService = new UserService();
 
-router.get('/', async (req, res) => {
+router.get('/',
+	passport.authenticate('jwt', { session: false }),
+	checkRoles('admin'),
+	async (req, res) => {
 	const users = await userService.find();
 	res.json(users);
 });

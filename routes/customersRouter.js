@@ -14,7 +14,10 @@ const router = express.Router();
 const service = new CustomerService();
 const passport = require('passport');
 
-router.get('/', async (req, res, next) => {
+router.get('/',
+	passport.authenticate('jwt', { session: false }),
+	checkRoles('admin'),
+	async (req, res, next) => {
 	try {
 		res.json(await service.find());
 	} catch (error) {
