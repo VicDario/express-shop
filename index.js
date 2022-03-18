@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { PORT } = require('./config');
 const routerAPI = require('./routes/index');
-const checkApiKey = require('./middlewares/authHandler');
 
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/errorHandler');
 
@@ -22,7 +21,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
-app.get('/ruta', checkApiKey, (req, res) => res.send('Hello World!'));
 
 require('./utils/auth');
 
