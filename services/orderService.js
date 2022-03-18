@@ -57,7 +57,11 @@ class OrderService {
 	}
 
 	async delete(id) {
-		return { success: true };
+		const deleted = await models.Order.destroy({
+			where: { id }
+		});
+		if (!deleted) throw boom.notFound('Order not found');
+		return deleted;
 	}
 }
 
