@@ -19,3 +19,5 @@ router.get('/my-orders',
 		}
 	}
 );
+
+module.exports = router;
