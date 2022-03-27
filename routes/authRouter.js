@@ -5,7 +5,6 @@ const AuthService = require('../../../services/AuthService');
 
 const service = new AuthService();
 
-
 router.post('/login',
 	passport.authenticate('local', { session: false }),
 	async (req, res, next) => {
@@ -27,6 +26,18 @@ router.post('/recovery',
 		try {
 			const { email } = req.body;
 			const rta = await service.sendMail(email);
+			res.status(201).json(rta);
+		} catch (error) {
+			next(error);
+		}
+	}
+)
+
+router.post('/change-password',
+	async (req, res, next) => {
+		try {
+			const { token, password } = req.body;
+			const rta = await service.changePassword(token, password);
 			res.status(201).json(rta);
 		} catch (error) {
 			next(error);

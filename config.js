@@ -11,6 +11,7 @@ module.exports = {
 	DATABASE_URL: process.env.DATABASE_URL,
 	API_KEY: process.env.API_KEY,
 	JWT_SECRET: process.env.JWT_SECRET,
+	RECOVERY_SECRET: process.env.RECOVERY_SECRET,
 	EMAIL_SENDER: process.env.EMAIL_SENDER,
 	EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
 	FRONTEND_URL: process.env.FRONTEND_URL,
