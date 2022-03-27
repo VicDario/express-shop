@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-const { JWT_SECRET, EMAIL_SENDER, EMAIL_PASSWORD } = require('../config');
+const { JWT_SECRET, EMAIL_SENDER, EMAIL_PASSWORD, FRONTEND_URL } = require('../config');
 
 const service = new UserService();
 
@@ -27,8 +27,26 @@ class AuthService {
 		return token;
 	}
 
-	async sendMail(email) {
+	async sendRecovery(email) {
 		const user = await service.findByEmail(email);
+		if (!user) throw boom.unauthorized();
+		const payload = { sub: user.id };
+		const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+		const link = `${FRONTEND_URL}/recovery?token=${token}`;
+		await service.update(user.id, { recoveryToken: token });
+		const mail = {
+			from: EMAIL_SENDER,
+			to: user.email,
+			subject: "Recovery password",
+			text: "Hey, you have requested a password recovery. Please click on the link below to reset your password. ${link}",
+			html: `<p>Hey, you have requested a password recovery. Please click on the link below to reset your password.</p>
+				   <p><a href="${link}">Click here.</a></p>`
+		}
+		const response = await this.sendMail(mail);
+		return response;
+	}
+
+	async sendMail(mail) {
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
 			secure: true,
@@ -38,13 +56,7 @@ class AuthService {
 				pass: EMAIL_PASSWORD
 			}
 		});
-		await transporter.sendMail({
-			from: EMAIL_SENDER,
-			to: user.email,
-			subject: "Recovery password",
-			text: "Hey, you have requested a password recovery. Please click on the link below to reset your password.",
-			html: `<p>Hey, you have requested a password recovery. Please click on the link below to reset your password.</p>`
-		});
+		await transporter.sendMail(mail);
 
 		return { message: 'Email sent' };
 	}
